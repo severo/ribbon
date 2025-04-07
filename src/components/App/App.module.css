@@ -8,4 +8,12 @@
   font-family: "SF Pro Text", "SF Pro Icons", system, -apple-system, system-ui,
     BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Helvetica", "Arial",
     "Lucida Grande", "Ubuntu", "Cantarell", "Fira Sans", sans-serif;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  main {
+    flex: 1;
+  }
 }
