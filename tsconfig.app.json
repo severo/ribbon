@@ -20,7 +20,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* inform typescript that vite uses aliases */
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"],
+    }
   },
   "include": ["src"]
 }
