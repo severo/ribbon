@@ -1,5 +1,5 @@
-import "./App.css";
-import Row, { RowData } from "./components/Row";
+import styles from "./App.module.css";
+import Row, { RowData } from "@/components/Row";
 
 function App() {
   const data: RowData = {
@@ -23,7 +23,7 @@ function App() {
     ],
   };
   return (
-    <>
+    <div className={styles.app}>
       <header>
         <h1>Ribbon</h1>
       </header>
@@ -31,7 +31,7 @@ function App() {
         <Row data={data} />
       </main>
       <footer>Code: https://github.com/severo/ribbon</footer>
-    </>
+    </div>
   );
 }
 

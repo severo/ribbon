@@ -1,5 +1,5 @@
 import styles from "./Row.module.css";
-import Range, { RangeData } from "../Range";
+import Range, { RangeData } from "@/components/Range";
 import { scaleLinear } from "d3-scale";
 
 export interface RowData {
