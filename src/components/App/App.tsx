@@ -1,35 +1,29 @@
 import styles from "./App.module.css";
-import Row, { RowData } from "@/components/Row";
+import Row, { View } from "@/components/Row";
+import { fetchData, RangeData } from "@/helpers/data";
+import { useState } from "react";
+import { PARQUET_URL } from "@/constants";
 
 function App() {
-  const data: RowData = {
-    start: 0,
-    end: 13,
-    ranges: [
-      {
-        id: "1",
-        start: 0,
-        end: 10,
-        color: "red",
-        label: "Data",
-      },
-      {
-        id: "2",
-        start: 10,
-        end: 11,
-        color: "blue",
-        label: "Metadata",
-      },
-    ],
-  };
+  // Add zoom and pan
+  // switch to vertical
+
+  const [data, setData] = useState<RangeData>();
+  const [view, setView] = useState<View>();
+
+  void fetchData(PARQUET_URL).then((nextData) => {
+    setData(nextData);
+    setView({
+      start: nextData.start,
+      end: nextData.end,
+    });
+  });
   return (
     <div className={styles.app}>
       <header>
         <h1>Ribbon</h1>
       </header>
-      <main>
-        <Row data={data} />
-      </main>
+      <main>{data && view && <Row data={data} view={view} />}</main>
       <footer>Code: https://github.com/severo/ribbon</footer>
     </div>
   );

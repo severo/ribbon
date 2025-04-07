@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "d3-scale": "^4.0.2",
+    "hyparquet": "^1.10.4",
+    "hyperparam": "^0.2.31",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

@@ -1,22 +1,17 @@
 import styles from "./Range.module.css";
+import { RangeData } from "@/helpers/data";
+
 interface RangeProps {
-  // start: number;
-  // end: number;
-  // color: string;
-  // label: string;
+  data: RangeData;
   style?: React.CSSProperties;
 }
 
 function Range({ style }: RangeProps) {
-  return <div className={styles.range} style={style}></div>;
+  const rangeStyle = {
+    backgroundColor: "red",
+    ...style,
+  };
+  return <div className={styles.range} style={rangeStyle}></div>;
 }
 
 export default Range;
-
-export interface RangeData {
-  id: string;
-  start: number;
-  end: number;
-  color: string;
-  label: string;
-}
