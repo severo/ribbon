@@ -1,0 +1,38 @@
+.card {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  &.hovered,
+  &:hover {
+    .size,
+    .details {
+      outline: 2px dotted rgba(0, 0, 0, 0.5);
+      outline-offset: 1px;
+    }
+  }
+
+  .size {
+    width: 4rem;
+    height: 4rem;
+    overflow: hidden;
+    background-color: var(--color);
+    border-radius: 50%;
+    font-size: 0.9rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .details {
+    text-align: start;
+    padding: 10px;
+
+    .range {
+      font-size: 0.8rem;
+    }
+  }
+}

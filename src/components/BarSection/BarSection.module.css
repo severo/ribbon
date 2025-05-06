@@ -1,0 +1,11 @@
+.section {
+  width: 100%;
+  position: absolute;
+  background-color: var(--color);
+
+  &.hovered,
+  &:hover {
+    outline: 2px dotted rgba(0, 0, 0, 0.5);
+    outline-offset: 1px;
+  }
+}

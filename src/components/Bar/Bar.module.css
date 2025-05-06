@@ -1,0 +1,6 @@
+.bar {
+  height: 100%;
+  width: 20px;
+  /* overflow: hidden; */
+  position: relative;
+}

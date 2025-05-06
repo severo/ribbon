@@ -1,29 +1,35 @@
 import styles from "./App.module.css";
-import Row, { View } from "@/components/Row";
-import { fetchData, RangeData } from "@/helpers/data";
-import { useState } from "react";
+import Section, { BytesRange } from "@/components/Section";
+import { fetchData, SectionData } from "@/helpers/data";
+import { useState, useEffect } from "react";
 import { PARQUET_URL } from "@/constants";
 
 function App() {
   // Add zoom and pan
-  // switch to vertical
 
-  const [data, setData] = useState<RangeData>();
-  const [view, setView] = useState<View>();
+  const [sectionData, setSectionData] = useState<SectionData>();
+  const [bytesRange, setBytesRange] = useState<BytesRange>();
 
-  void fetchData(PARQUET_URL).then((nextData) => {
-    setData(nextData);
-    setView({
-      start: nextData.start,
-      end: nextData.end,
+  useEffect(() => {
+    void fetchData(PARQUET_URL).then((nextSectionData) => {
+      setSectionData(nextSectionData);
+      setBytesRange({
+        start: nextSectionData.offset,
+        end: nextSectionData.offset + nextSectionData.length,
+      });
     });
-  });
+  }, []);
+
   return (
     <div className={styles.app}>
       <header>
         <h1>Ribbon</h1>
       </header>
-      <main>{data && view && <Row data={data} view={view} />}</main>
+      <main>
+        {sectionData && bytesRange && (
+          <Section sectionData={sectionData} bytesRange={bytesRange} />
+        )}
+      </main>
       <footer>Code: https://github.com/severo/ribbon</footer>
     </div>
   );
