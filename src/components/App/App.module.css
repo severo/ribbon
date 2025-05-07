@@ -26,6 +26,10 @@
       height: 600px;
     }
     & > footer {
+      width: 100%;
+      @media (min-width: 40rem) {
+        width: auto;
+      }
     }
   }
 }
