@@ -6,6 +6,8 @@ interface BytesRangeSelectorProps {
   setBytesRange: (bytesRange: BytesRange) => void;
 }
 
+const defaultValue = 0;
+
 function BytesRangeSelector({
   bytesRange,
   setBytesRange,
@@ -26,7 +28,7 @@ function BytesRangeSelector({
             type="number"
             disabled={isDisabled}
             required
-            value={bytesRange?.first}
+            value={bytesRange?.first ?? defaultValue}
             onChange={(e) => {
               const first = parseInt(e.target.value, 10);
               setBytesRange({
@@ -43,7 +45,7 @@ function BytesRangeSelector({
           <input
             type="number"
             disabled={isDisabled}
-            value={bytesRange?.last}
+            value={bytesRange?.last ?? defaultValue}
             onChange={(e) => {
               const last = parseInt(e.target.value, 10);
               setBytesRange({
