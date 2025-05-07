@@ -30,7 +30,6 @@
   .details {
     text-align: start;
     padding: 10px;
-    height: 20rem;
     flex: 1;
 
     .range {

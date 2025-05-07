@@ -6,12 +6,8 @@ import CardsList from "@/components/CardsList";
 import { scaleLinear } from "d3-scale";
 import { SectionData } from "@/helpers/data";
 import React from "react";
+import { BytesRange } from "@/components/BytesRangeSelector";
 
-// see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Range
-export interface BytesRange {
-  start: number;
-  end: number; // inclusive
-}
 interface SectionProps {
   sectionData: SectionData;
   bytesRange: BytesRange;
@@ -28,10 +24,10 @@ function Section({ sectionData, bytesRange }: SectionProps) {
 
   function computeStyle(section: SectionData) {
     const start = scale(section.offset);
-    const width = scale(section.length);
+    const length = scale(section.offset + section.length) - start;
     return {
       top: `${start.toString()}%`,
-      height: `${width.toString()}%`,
+      height: `${length.toString()}%`,
     };
   }
 
