@@ -11,9 +11,10 @@ import type { ValidBytesRange } from "@/helpers/bytesRange";
 interface SectionProps {
   sectionData: SectionData;
   bytesRange: ValidBytesRange;
+  setSectionData: (sectionData: SectionData | undefined) => void;
 }
 
-function Section({ sectionData, bytesRange }: SectionProps) {
+function Section({ sectionData, bytesRange, setSectionData }: SectionProps) {
   const [hoveredSection, setHoveredSection] = React.useState<
     SectionData | undefined
   >(undefined);
@@ -47,37 +48,61 @@ function Section({ sectionData, bytesRange }: SectionProps) {
   const onMouseLeave = () => {
     setHoveredSection(undefined);
   };
+  const getOnClick = (section: SectionData) => {
+    return () => {
+      setSectionData(section);
+    };
+  };
+  const getOnKeyDown = (section: SectionData) => {
+    return (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        setSectionData(section);
+      }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setSectionData(undefined);
+      }
+    };
+  };
+
+  const sections = sectionData.children ?? [sectionData];
 
   // TODO: keyboard navigation
   return (
     <div className={styles.section}>
-      <Bar>
-        {sectionData.children?.map((child, i) => {
-          return (
-            <BarSection
-              key={`section_${i.toString()}`}
-              style={computeStyle(child)}
-              sectionData={child}
-              onMouseEnter={getOnMouseEnter(child)}
-              onMouseLeave={onMouseLeave}
-              hovered={hoveredSection === child}
-            />
-          );
-        })}
-      </Bar>
-      <CardsList>
-        {sectionData.children?.map((child, i) => {
-          return (
-            <Card
-              key={`section_${i.toString()}`}
-              sectionData={child}
-              onMouseEnter={getOnMouseEnter(child)}
-              onMouseLeave={onMouseLeave}
-              hovered={hoveredSection === child}
-            />
-          );
-        })}
-      </CardsList>
+      <div className={styles.wrapper}>
+        <Bar>
+          {sections.map((child, i) => {
+            return (
+              <BarSection
+                key={`section_${i.toString()}`}
+                style={computeStyle(child)}
+                sectionData={child}
+                hovered={hoveredSection === child}
+                onMouseEnter={getOnMouseEnter(child)}
+                onMouseLeave={onMouseLeave}
+                onClick={getOnClick(child)}
+                onKeyDown={getOnKeyDown(child)}
+              />
+            );
+          })}
+        </Bar>
+        <CardsList>
+          {sections.map((child, i) => {
+            return (
+              <Card
+                key={`section_${i.toString()}`}
+                sectionData={child}
+                hovered={hoveredSection === child}
+                onMouseEnter={getOnMouseEnter(child)}
+                onMouseLeave={onMouseLeave}
+                onClick={getOnClick(child)}
+                onKeyDown={getOnKeyDown(child)}
+              />
+            );
+          })}
+        </CardsList>
+      </div>
     </div>
   );
 }

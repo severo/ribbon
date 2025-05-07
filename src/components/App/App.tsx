@@ -9,24 +9,31 @@ import { BytesRange, validateBytesRange } from "@/helpers/bytesRange";
 function App() {
   // Add zoom and pan
 
+  const [fileData, setFileData] = useState<SectionData>();
   const [sectionData, setSectionData] = useState<SectionData>();
   const [bytesRange, setBytesRange] = useState<BytesRange>();
 
   useEffect(() => {
-    void fetchData(PARQUET_URL).then((nextSectionData) => {
-      setSectionData(nextSectionData);
-      setBytesRange({
-        first: nextSectionData.offset,
-        last: nextSectionData.offset + nextSectionData.length - 1,
-      });
+    void fetchData(PARQUET_URL).then((nextFileData) => {
+      setFileData(nextFileData);
+      setSectionData(nextFileData);
     });
   }, []);
 
+  useEffect(() => {
+    if (sectionData) {
+      setBytesRange({
+        first: sectionData.offset,
+        last: sectionData.offset + sectionData.length - 1,
+      });
+    }
+  }, [sectionData]);
+
   const validationResult = validateBytesRange(bytesRange, {
-    min: sectionData?.offset,
+    min: fileData?.offset,
     max:
-      sectionData?.offset !== undefined && sectionData.length
-        ? sectionData.offset + sectionData.length - 1
+      fileData?.offset !== undefined && fileData.length
+        ? fileData.offset + fileData.length - 1
         : undefined,
   });
 
@@ -52,6 +59,7 @@ function App() {
             <Section
               sectionData={sectionData}
               bytesRange={validationResult.validBytesRange}
+              setSectionData={setSectionData}
             />
           )}
         </section>

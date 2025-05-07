@@ -3,10 +3,20 @@
   position: absolute;
   background-color: var(--color);
 
+  border: 1px solid black;
+  border-bottom: none;
+  &:last-of-type {
+    border-bottom: 1px solid black;
+  }
+
   &.hovered,
   &:hover {
     outline: 2px solid rgba(0, 0, 0, 0.5);
-    outline-offset: 1px;
+    outline-offset: 2px;
     z-index: 1;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 }

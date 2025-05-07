@@ -4,9 +4,11 @@ import { cn } from "@/utils";
 
 interface CardProps {
   sectionData: SectionData;
+  hovered?: boolean;
   onMouseEnter?: (e: React.MouseEvent<HTMLInputElement>) => void;
   onMouseLeave?: (e: React.MouseEvent<HTMLInputElement>) => void;
-  hovered?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 function humanSize(bytes: number): string {
@@ -16,13 +18,25 @@ function humanSize(bytes: number): string {
   return `${(bytes / Math.pow(1024, i)).toFixed(0)} ${sizes[i]}`;
 }
 
-function Card({ sectionData, onMouseEnter, onMouseLeave, hovered }: CardProps) {
+function Card({
+  sectionData,
+  hovered,
+  onMouseEnter,
+  onMouseLeave,
+  onClick,
+  onKeyDown,
+}: CardProps) {
   return (
     <div
       className={cn(styles.card, hovered && styles.hovered)}
+      style={{ "--color": sectionData.color } as React.CSSProperties}
+      role="button"
+      tabIndex={0}
+      aria-label={`Press to select the section ${sectionData.label}`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      style={{ "--color": sectionData.color } as React.CSSProperties}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
     >
       <div className={styles.size}>
         <div>{humanSize(sectionData.length)}</div>

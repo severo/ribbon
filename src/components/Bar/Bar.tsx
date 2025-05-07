@@ -6,11 +6,7 @@ interface BarProps {
 }
 
 function Bar({ children }: BarProps) {
-  return (
-    <div className={styles.bar}>
-      <div className={styles.barSections}>{children}</div>
-    </div>
-  );
+  return <div className={styles.bar}>{children}</div>;
 }
 
 export default Bar;

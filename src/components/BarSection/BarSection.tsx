@@ -11,17 +11,21 @@ interface BarSectionProps {
   sectionData: SectionData;
   bytesRange?: BytesRange;
   style?: React.CSSProperties;
+  hovered?: boolean;
   onMouseEnter?: (e: React.MouseEvent<HTMLInputElement>) => void;
   onMouseLeave?: (e: React.MouseEvent<HTMLInputElement>) => void;
-  hovered?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 function BarSection({
   style,
   sectionData,
+  hovered,
   onMouseEnter,
   onMouseLeave,
-  hovered,
+  onClick,
+  onKeyDown,
 }: BarSectionProps) {
   const sectionStyle = {
     ...style,
@@ -31,9 +35,13 @@ function BarSection({
     <div
       className={cn(styles.barSection, hovered && styles.hovered)}
       style={sectionStyle}
+      aria-label={`Press to select the section ${sectionData.label}`}
+      role="button"
+      tabIndex={0}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      aria-label={sectionData.label}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
     ></div>
   );
 }

@@ -1,22 +1,5 @@
 .bar {
-  --vertical-padding: 2%;
-  height: 100%;
+  position: relative;
   width: 32px;
-  overflow: hidden;
-  padding: 4px; /* account for the outlines around bar sections */
-
-  .barSections {
-    position: relative;
-    top: var(--vertical-padding);
-    height: calc(100% - 2 * var(--vertical-padding));
-    width: 100%;
-  }
-
-  mask-image: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 1) var(--vertical-padding),
-    rgba(0, 0, 0, 1) calc(100% - var(--vertical-padding)),
-    rgba(0, 0, 0, 0) 100%
-  );
+  margin: 4px; /* account for the outlines around bar sections */
 }

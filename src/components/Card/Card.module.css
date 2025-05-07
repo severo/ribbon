@@ -13,6 +13,10 @@
     }
   }
 
+  &:hover {
+    cursor: pointer;
+  }
+
   .size {
     width: 4rem;
     height: 4rem;

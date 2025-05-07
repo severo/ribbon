@@ -2,11 +2,11 @@ import styles from "./BytesRangeSelector.module.css";
 import type { BytesRange } from "@/helpers/bytesRange";
 
 interface BytesRangeSelectorProps {
-  bytesRange?: BytesRange; //
+  bytesRange?: BytesRange;
   setBytesRange: (bytesRange: BytesRange) => void;
 }
 
-const defaultValue = 0;
+const defaultValue = "";
 
 function BytesRangeSelector({
   bytesRange,
