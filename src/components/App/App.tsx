@@ -3,9 +3,8 @@ import Section from "@/components/Section";
 import { fetchData, SectionData } from "@/helpers/data";
 import { useState, useEffect } from "react";
 import { PARQUET_URL } from "@/constants";
-import BytesRangeSelector, {
-  BytesRange,
-} from "@/components/BytesRangeSelector";
+import BytesRangeSelector from "@/components/BytesRangeSelector";
+import { BytesRange, validateBytesRange } from "@/helpers/bytesRange";
 
 function App() {
   // Add zoom and pan
@@ -17,11 +16,19 @@ function App() {
     void fetchData(PARQUET_URL).then((nextSectionData) => {
       setSectionData(nextSectionData);
       setBytesRange({
-        start: nextSectionData.offset,
-        end: nextSectionData.offset + nextSectionData.length,
+        first: nextSectionData.offset,
+        last: nextSectionData.offset + nextSectionData.length - 1,
       });
     });
   }, []);
+
+  const validationResult = validateBytesRange(bytesRange, {
+    min: sectionData?.offset,
+    max:
+      sectionData?.offset !== undefined && sectionData.length
+        ? sectionData.offset + sectionData.length - 1
+        : undefined,
+  });
 
   return (
     <div className={styles.app}>
@@ -29,15 +36,31 @@ function App() {
         <h1>Ribbon</h1>
       </header>
       <main>
-        {sectionData && bytesRange && (
-          <Section sectionData={sectionData} bytesRange={bytesRange} />
-        )}
-        <BytesRangeSelector
-          minValue={sectionData?.offset}
-          maxValue={sectionData?.length}
-          bytesRange={bytesRange}
-          setBytesRange={setBytesRange}
-        ></BytesRangeSelector>
+        <section>
+          {"error" in validationResult && (
+            <div className={styles.error}>
+              <p>{validationResult.error}</p>
+              <p>Please select a valid bytes range using the selector below.</p>
+            </div>
+          )}
+          {!sectionData && (
+            <div className={styles.loading}>
+              <p>Loading...</p>
+            </div>
+          )}
+          {"validBytesRange" in validationResult && sectionData && (
+            <Section
+              sectionData={sectionData}
+              bytesRange={validationResult.validBytesRange}
+            />
+          )}
+        </section>
+        <footer>
+          <BytesRangeSelector
+            bytesRange={bytesRange}
+            setBytesRange={setBytesRange}
+          ></BytesRangeSelector>
+        </footer>
       </main>
       <footer>Code: https://github.com/severo/ribbon</footer>
     </div>

@@ -1,31 +1,16 @@
 import styles from "./BytesRangeSelector.module.css";
-
-// see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Range
-export interface BytesRange {
-  start: number;
-  end: number; // inclusive
-}
+import type { BytesRange } from "@/helpers/bytesRange";
 
 interface BytesRangeSelectorProps {
-  minValue?: number; // disables the inputs if undefined
-  maxValue?: number; // disables the inputs if undefined
   bytesRange?: BytesRange; //
   setBytesRange: (bytesRange: BytesRange) => void;
 }
 
-const defaultMinValue = 0;
-const defaultMaxValue = 0xffffffff; // 4 bytes
-
 function BytesRangeSelector({
-  minValue,
-  maxValue,
   bytesRange,
   setBytesRange,
 }: BytesRangeSelectorProps) {
-  const isDisabled =
-    minValue === undefined ||
-    maxValue === undefined ||
-    bytesRange === undefined;
+  const isDisabled = bytesRange === undefined;
   return (
     <form
       className={styles.selector}
@@ -36,38 +21,40 @@ function BytesRangeSelector({
       <fieldset>
         <legend>Bytes range</legend>
         <label>
-          <span>Start: </span>
+          <span>Start</span>
           <input
             type="number"
             disabled={isDisabled}
-            value={bytesRange?.start ?? defaultMinValue}
+            required
+            value={bytesRange?.first}
             onChange={(e) => {
-              const start = parseInt(e.target.value, 10);
-              if (isNaN(start) || isDisabled) return;
-              setBytesRange({ ...bytesRange, start });
+              const first = parseInt(e.target.value, 10);
+              setBytesRange({
+                ...bytesRange,
+                first: isNaN(first) ? undefined : first,
+              });
             }}
-            min={0}
-            max={bytesRange?.end ?? defaultMaxValue}
             step={1}
             className={styles.input}
           />
         </label>
+        <span>-</span>
         <label>
-          <span>End: </span>
           <input
             type="number"
             disabled={isDisabled}
-            value={bytesRange?.end ?? defaultMaxValue}
+            value={bytesRange?.last}
             onChange={(e) => {
-              const end = parseInt(e.target.value, 10);
-              if (isNaN(end) || isDisabled) return;
-              setBytesRange({ ...bytesRange, end });
+              const last = parseInt(e.target.value, 10);
+              setBytesRange({
+                ...bytesRange,
+                last: isNaN(last) ? undefined : last,
+              });
             }}
-            min={bytesRange?.start ?? defaultMinValue}
-            max={Infinity}
             step={1}
             className={styles.input}
           />
+          <span>End</span>
         </label>
       </fieldset>
     </form>

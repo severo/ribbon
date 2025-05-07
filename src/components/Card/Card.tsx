@@ -31,7 +31,7 @@ function Card({ sectionData, onMouseEnter, onMouseLeave, hovered }: CardProps) {
         <div>{sectionData.label}</div>
         <div className={styles.range}>
           Range: {sectionData.offset} -{" "}
-          {sectionData.offset + sectionData.length}
+          {sectionData.offset + sectionData.length - 1}
         </div>
       </div>
     </div>

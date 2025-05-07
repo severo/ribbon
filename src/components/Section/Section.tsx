@@ -6,11 +6,11 @@ import CardsList from "@/components/CardsList";
 import { scaleLinear } from "d3-scale";
 import { SectionData } from "@/helpers/data";
 import React from "react";
-import { BytesRange } from "@/components/BytesRangeSelector";
+import type { ValidBytesRange } from "@/helpers/bytesRange";
 
 interface SectionProps {
   sectionData: SectionData;
-  bytesRange: BytesRange;
+  bytesRange: ValidBytesRange;
 }
 
 function Section({ sectionData, bytesRange }: SectionProps) {
@@ -18,16 +18,22 @@ function Section({ sectionData, bytesRange }: SectionProps) {
     SectionData | undefined
   >(undefined);
 
-  const scale = scaleLinear()
-    .domain([bytesRange.start, bytesRange.end])
-    .range([0, 100]);
+  const first = bytesRange.first;
+  const last = bytesRange.last;
 
+  const scale = scaleLinear().domain([first, last]).range([0, 100]);
+
+  function scaleAndClamp(value: number) {
+    const max = 200;
+    const min = -100;
+    return Math.max(min, Math.min(max, scale(value)));
+  }
   function computeStyle(section: SectionData) {
-    const start = scale(section.offset);
-    const length = scale(section.offset + section.length) - start;
+    const top = scaleAndClamp(section.offset);
+    const height = scaleAndClamp(section.offset + section.length) - top;
     return {
-      top: `${start.toString()}%`,
-      height: `${length.toString()}%`,
+      top: `${top.toString()}%`,
+      height: `${height.toString()}%`,
     };
   }
 
