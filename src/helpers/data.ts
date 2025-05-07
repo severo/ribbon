@@ -7,13 +7,13 @@ async function fetchParquet(url: string) {
   const t0 = performance.now();
   const byteLength = await byteLengthFromUrl(url);
   const t1 = performance.now();
-  console.log(`byteLengthFromUrl took ${t1 - t0} ms`);
+  console.log(`byteLengthFromUrl took ${(t1 - t0).toString()} ms`);
   const asyncBuffer = await asyncBufferFrom({ url, byteLength });
   const t2 = performance.now();
-  console.log(`asyncBufferFrom took ${t2 - t1} ms`);
+  console.log(`asyncBufferFrom took ${(t2 - t1).toString()} ms`);
   const metadata = await parquetMetadataAsync(asyncBuffer);
   const t3 = performance.now();
-  console.log(`parquetMetadataAsync took ${t3 - t2} ms`);
+  console.log(`parquetMetadataAsync took ${(t3 - t2).toString()} ms`);
   // const df = rowCache(parquetDataFrame(from, metadata))
   return { metadata, byteLength };
 }
