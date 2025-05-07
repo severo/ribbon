@@ -21,7 +21,9 @@ function Section({ sectionData, bytesRange }: SectionProps) {
   const first = bytesRange.first;
   const last = bytesRange.last;
 
-  const scale = scaleLinear().domain([first, last]).range([0, 100]);
+  const scale = scaleLinear()
+    .domain([first, last + 1])
+    .range([0, 100]);
 
   function scaleAndClamp(value: number) {
     const max = 200;
