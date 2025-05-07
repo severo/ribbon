@@ -29,7 +29,7 @@ function BarSection({
   };
   return (
     <div
-      className={cn(styles.section, hovered && styles.hovered)}
+      className={cn(styles.barSection, hovered && styles.hovered)}
       style={sectionStyle}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

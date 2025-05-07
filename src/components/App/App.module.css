@@ -22,10 +22,10 @@
     gap: 1rem;
     align-items: center;
 
-    section {
+    & > section {
       height: 600px;
     }
-    footer {
+    & > footer {
     }
   }
 }
