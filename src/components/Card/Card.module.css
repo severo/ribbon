@@ -9,7 +9,7 @@
   &:hover {
     .size,
     .details {
-      outline: 2px dotted rgba(0, 0, 0, 0.5);
+      outline: 2px solid rgba(0, 0, 0, 0.5);
       outline-offset: 1px;
     }
   }
@@ -30,6 +30,8 @@
   .details {
     text-align: start;
     padding: 10px;
+    height: 20rem;
+    flex: 1;
 
     .range {
       font-size: 0.8rem;
