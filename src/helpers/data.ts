@@ -82,6 +82,6 @@ export async function fetchData(url: string): Promise<SectionData> {
       return acc;
     }, []),
   };
-  parent.children?.map((child) => ({ ...child, parent }));
+  parent.children = parent.children?.map((child) => ({ ...child, parent }));
   return parent;
 }

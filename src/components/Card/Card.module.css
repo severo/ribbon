@@ -18,6 +18,41 @@
   }
 
   .size {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    gap: 0.5rem;
+
+    .units {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+
+      .unit {
+        width: 1rem;
+        height: 1rem;
+        margin: auto;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.6rem;
+        text-align: center;
+        line-height: 1rem;
+
+        color: hsl(0, 0%, 50%);
+        border-top: 1px solid hsl(0, 0%, 10%, 0);
+        &.selected {
+          border-top: 1px solid hsl(0, 0%, 10%);
+          color: hsl(0, 0%, 10%);
+        }
+      }
+    }
+
+    meter {
+      width: 100%;
+    }
+  }
+
+  .sizeCircle {
     width: 4rem;
     height: 4rem;
     overflow: hidden;
